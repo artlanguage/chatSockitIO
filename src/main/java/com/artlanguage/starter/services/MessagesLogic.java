@@ -5,10 +5,8 @@ import com.artlanguage.starter.models.ChatsList;
 import com.artlanguage.starter.models.Messages;
 import com.artlanguage.starter.repository.MessagesRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -22,9 +20,7 @@ public class MessagesLogic {
     public Map<Object, Object> saveMessage(Messages m) {
 
         Map<Object, Object> errMsg = new HashMap<>();
-        System.err.println(m);
         m = messagesRepo.save(m);
-        System.err.println(m);
         if (m == null) {
             errMsg.put("error", "NOT ADDED CODE");
         } else

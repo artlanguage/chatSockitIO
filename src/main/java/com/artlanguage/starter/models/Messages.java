@@ -42,10 +42,10 @@ public class Messages {
     private String date;
 
 
-    public Messages(String userName, String msg){
-        this.message = msg;
-        this.receiverId=1;
-        this.senderId=2;
+    public Messages(ChatMessage chatMessage){
+        this.message = chatMessage.getMessage();
+        this.receiverId=getReceiverId();
+        this.senderId=chatMessage.getSenderId();
         this.date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
     }
 

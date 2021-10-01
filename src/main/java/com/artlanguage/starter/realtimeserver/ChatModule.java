@@ -37,9 +37,7 @@ public class ChatModule {
     private DataListener<ChatMessage> onChatReceived() {
         return (client, data, ackSender) -> {
             namespace.getBroadcastOperations().sendEvent("chat", data);
-//            logic.saveMessage(new Messages(data.getUserName(),data.getMessage()));
-            System.err.println("repo="+repo);
-            repo.save(new Messages(data.getUserName(), data.getMessage()));
+            repo.save(new Messages(data));
         };
     }
 

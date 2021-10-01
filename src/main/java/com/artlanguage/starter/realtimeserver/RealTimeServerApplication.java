@@ -17,6 +17,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @ComponentScan("com.artlanguage.starter.services")
+@ComponentScan("com.artlanguage.starter.repository")
 @ComponentScan(basePackageClasses = ChatsController.class)
 @EntityScan("com.artlanguage.starter.models")
 @EnableJpaRepositories(value = "com.artlanguage.starter.repository")
