@@ -44,7 +44,7 @@ public class Messages {
 
     public Messages(ChatMessage chatMessage){
         this.message = chatMessage.getMessage();
-        this.receiverId=getReceiverId();
+        this.receiverId=chatMessage.getReceiverId();
         this.senderId=chatMessage.getSenderId();
         this.date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
     }

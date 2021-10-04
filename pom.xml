@@ -21,7 +21,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <netty-socketio.version>1.7.17</netty-socketio.version>
+        <netty-socketio.version>1.7.19</netty-socketio.version>
     </properties>
 
     <dependencies>
