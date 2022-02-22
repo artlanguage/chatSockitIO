@@ -58,7 +58,7 @@ public class ChatModule {
             System.err.println("===========================");
             System.err.println("===========================");
             System.err.println("===========================");
-            System.err.println("DATA="+data);
+            System.err.println("DATA="+data.toString());
             System.err.println("===========================");
             System.err.println("===========================");
             System.err.println("===========================");
