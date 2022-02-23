@@ -47,7 +47,7 @@
 <script>
     var userName = 'user' + Math.floor((Math.random() * 1000) + 1);
 
-    var socket = io('http://localhost:9092/chat?token=abc123', {
+    var socket = io('https://realtime-chat-sockit-io.herokuapp.com:9092/chat?token=abc123', {
         transports: ['polling', 'websocket']
     });
     socket.on('connect', function () {
