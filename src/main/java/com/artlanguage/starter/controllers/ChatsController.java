@@ -40,7 +40,7 @@ public class ChatsController {
 
     @PostMapping(value = "/chatsList", produces = {"application/json"})
     @ResponseBody
-    public List<Map<Object, Object>> chatsList(@RequestBody String requestBody) throws JsonProcessingException {
+    public Object chatsList(@RequestBody String requestBody) {
         JSONObject body = new JSONObject(requestBody);
         List<Map<Object, Object>> res = new ArrayList<>();
         Map<Object, Object> msg = new HashMap<>();
@@ -49,7 +49,7 @@ public class ChatsController {
             res.add(msg);
             return res;
         }
-        return logic.logicGetAllUserChatsList(body.getInt("userId"));
+        return logic.logicGetAllUserChatsList(body.optInt("userId") , body.optInt("limit"), body.optInt("offset") );
     } // end chatsList
 
 

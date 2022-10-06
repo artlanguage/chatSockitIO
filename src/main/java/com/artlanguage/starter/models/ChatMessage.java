@@ -14,5 +14,8 @@ public class ChatMessage {
     private int senderId;
     private int receiverId;
     private String message;
+    private String isSeen;
+    private String isRead;
+
 
 }

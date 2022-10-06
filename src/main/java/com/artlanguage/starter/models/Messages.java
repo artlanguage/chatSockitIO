@@ -42,8 +42,18 @@ public class Messages {
     private String date;
 
 
+    @Column(name = "is_seen")
+    private String isSeen;
+
+
+    @Column(name = "is_read")
+    private String isRead;
+
+
     public Messages(ChatMessage chatMessage){
         this.message = chatMessage.getMessage();
+        this.isSeen = chatMessage.getIsSeen();
+        this.isRead= chatMessage.getIsRead();
         this.receiverId=chatMessage.getReceiverId();
         this.senderId=chatMessage.getSenderId();
         this.date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());

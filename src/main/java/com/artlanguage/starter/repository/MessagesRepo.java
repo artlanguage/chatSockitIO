@@ -3,10 +3,12 @@ package com.artlanguage.starter.repository;
 import com.artlanguage.starter.models.Messages;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface MessagesRepo extends JpaRepository<Messages, Integer> {
@@ -22,13 +24,20 @@ public interface MessagesRepo extends JpaRepository<Messages, Integer> {
 
 
     @Transactional
-    @Query(value = "SELECT * from messages where sender_id=?1 group by receiver_id;", nativeQuery = true)
-    List<Messages> getAllUserChats(int userid);
+    @Query(value = "select mm.sender_id , mm.receiver_id , " +
+            "       (select m.message  from messages m " +
+            "       where m.sender_id =mm.sender_id and m.receiver_id=mm.receiver_id order by m.date desc limit 1) as 'message' , " +
+            "       (select m.date  from messages m " +
+            "        where m.sender_id =mm.sender_id and m.receiver_id=mm.receiver_id order by m.date desc limit 1) as 'date' " +
+            "from messages mm where mm.sender_id= :sId group by receiver_id order by date desc limit :l offset :o ;", nativeQuery = true)
+    List<Map<Object,Object>> getAllUserChats(@Param("sId") int senderId,@Param("l") int limit ,@Param("o") int offset);
 
 
-    @Query(value = "select * from messages where sender_id =?1 and receiver_id=?2" +
-            " ORDER BY date DESC;", nativeQuery = true)
-    List<Messages> getLastMessageBetweenTwoUsers(int userid1, int userid2);
+    @Transactional
+    @Query(value = "select mm.sender_id " +
+            "from messages mm where mm.sender_id=:sId group by receiver_id  limit :l offset :o ;", nativeQuery = true)
+    List<Map<Object,Object>> countAllUserChats(@Param("sId") int senderId,@Param("l") int limit ,@Param("o") int offset);
+
 
 
 }

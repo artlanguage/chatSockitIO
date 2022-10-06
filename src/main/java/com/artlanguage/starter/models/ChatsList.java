@@ -1,24 +1,24 @@
 package com.artlanguage.starter.models;
 
 public class ChatsList {
-    private int userId;
-    private int lastMsgSenderId;
+    private String userId;
+    private String lastMsgSenderId;
     private String lastMsg;
     private String lastMsgDate;
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    public int getLastMsgSenderId() {
+    public String getLastMsgSenderId() {
         return lastMsgSenderId;
     }
 
-    public void setLastMsgSenderId(int lastMsgSenderId) {
+    public void setLastMsgSenderId(String lastMsgSenderId) {
         this.lastMsgSenderId = lastMsgSenderId;
     }
 

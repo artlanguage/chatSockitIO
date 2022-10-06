@@ -48,53 +48,27 @@ public class MessagesLogic {
                 return res;
     }
 
-    public List<Map<Object, Object>> logicGetAllUserChatsList(int userid) {
-        List<ChatsList> chatsLists = new ArrayList<>();
-        List<Map<Object, Object>> res = new ArrayList<>();
-        try {
-                List<Messages> usersIds = messagesRepo.getAllUserChats(userid);
-            System.err.println(usersIds);
-                chatsLists.clear();
-                for (int i = 0; i < usersIds.size(); i++) {
-                    ChatsList cl = new ChatsList();
-                    cl.setUserId(usersIds.get(i).getReceiverId());
-                    // the returned message raw from db
-                    Messages mStatus = messagesRepo.getLastMessageBetweenTwoUsers
-                            (userid, usersIds.get(i).getReceiverId()).get(0);
-                    cl.setLastMsgSenderId(mStatus.getSenderId());
-                    cl.setLastMsg(mStatus.getMessage());
-                    cl.setLastMsgDate(mStatus.getDate());
+    public Object logicGetAllUserChatsList(int sender_id , int limit , int offset ) {
 
-                    chatsLists.add(cl);
-                }
+        System.err.println("senderId="+sender_id+" , limit="+limit+" , offset"+offset);
+        Map<Object,Object> res = new HashMap<>();
+        if (limit==0)
+            limit=Integer.MAX_VALUE;
+        try {
+                List<Map<Object,Object>> messages = messagesRepo.getAllUserChats(sender_id,limit,offset);
+                long c = messagesRepo.countAllUserChats(sender_id, Integer.MAX_VALUE, 0).size();
+
+                res.put("messages",messages);
+                res.put("total",c);
+
+                return res;
 
         } catch (Exception e) {
-            addNullUserToList(chatsLists, e.getMessage());
-        } finally {
-            if (chatsLists.get(0).getUserId() != 0) {
-                for (int i = 0; i < chatsLists.size(); i++) {
-                    Map<Object, Object> obj = new HashMap<>();
-                    obj.put("user_id", chatsLists.get(i).getUserId());
-                    obj.put("lastMgs", chatsLists.get(i).getLastMsg());
-                    obj.put("lastMgsSenderId", chatsLists.get(i).getLastMsgSenderId());
-                    obj.put("lastMgsDate", chatsLists.get(i).getLastMsgDate());
-                    res.add(obj);
-                }
-            } else {
-                Map<Object, Object> obj = new HashMap<>();
-                obj.put("error", "THIS USER DOES NOT TALK TO ANY ONE, THE RETURNED LIST IS EMPTY");
-                res.add(obj);
-            }
+            e.printStackTrace();
+            res.put("error",e.getMessage());
             return res;
         }
-    }//end of logicGetAllUserChatsList
 
-    private void addNullUserToList(List<ChatsList> chatsLists, String msg) {
-        ChatsList nullUser = new ChatsList();
-        nullUser.setUserId(0);
-        nullUser.setLastMsg(msg);
-        chatsLists.clear();
-        chatsLists.add(nullUser);
+        }//end of logicGetAllUserChatsList
     }
 
-}
